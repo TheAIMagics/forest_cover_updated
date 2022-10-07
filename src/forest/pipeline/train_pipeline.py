@@ -5,6 +5,7 @@ from pandas import DataFrame
 
 from src.forest.components.data_ingestion import DataIngestion
 from src.forest.components.data_validation import DataValidation
+from src.forest.components.data_transformation import DataTransformation
 from src.forest.exception import ForestException
 from src.forest.logger import logging
 from src.forest.configuration.configuration import ConfigurationManager
@@ -54,6 +55,30 @@ class TrainPipeline:
             )
 
             return data_validation_status
+
+        except Exception as e:
+            raise ForestException(e, sys) from e
+        
+    @staticmethod
+    def start_data_transformation(
+        train_set: DataFrame, test_set: DataFrame
+    ) -> Tuple[DataFrame, DataFrame]:
+        logging.info(
+            "Entered the start_data_transformation method of TrainPipeline class"
+        )
+
+        try:
+            data_transformation = DataTransformation()
+
+            train_set, test_set = data_transformation.initiate_data_transformation(
+                train_set, test_set
+            )
+
+            logging.info(
+                "Exited the start_data_transformation method of TrainPipeline class"
+            )
+
+            return train_set, test_set
 
         except Exception as e:
             raise ForestException(e, sys) from e

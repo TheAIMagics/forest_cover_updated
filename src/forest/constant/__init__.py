@@ -28,8 +28,10 @@ PREPROCESSOR_OBJ_FILE_NAME = ARTIFACTS_DIR + "/" + "forest_preprocessor.pkl"
 
 TRAIN_TEST_SPLIT_SIZE = 0.2
 
-TARGET_COLUMN = "class"
+TARGET_COLUMN = "Cover_Type"
 
 APP_HOST = "0.0.0.0"
 
 APP_PORT = 8080
+
+RANDOM_STATE = 42

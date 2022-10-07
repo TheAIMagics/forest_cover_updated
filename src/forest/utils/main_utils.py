@@ -15,7 +15,6 @@ from src.forest.constant import MODEL_CONFIG_FILE, SCHEMA_CONFIG_FILE
 from src.forest.exception import ForestException
 from src.forest.logger import logging
 
-
 class MainUtils:
     def __init__(self) -> None:
         pass
@@ -48,3 +47,16 @@ class MainUtils:
             os.makedirs(path, exist_ok=True)
             if verbose:
                 logging.info(f"created directory at: {path}")
+
+    @staticmethod
+    def save_object(file_path: str, obj: object) -> None:
+        logging.info("Entered the save_object method of MainUtils class")
+
+        try:
+            with open(file_path, "wb") as file_obj:
+                dill.dump(obj, file_obj)
+
+            logging.info("Exited the save_object method of MainUtils class")
+
+        except Exception as e:
+            raise ForestException(e, sys) from e
