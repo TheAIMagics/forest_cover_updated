@@ -1,3 +1,7 @@
+from pathlib import Path
+
+CONFIG_FILE_PATH = Path('config/config.yaml')
+
 LOG_DIR = "logs"
 
 LOG_FILE = "forest.log"

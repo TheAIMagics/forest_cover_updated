@@ -1,5 +1,5 @@
 import shutil
-import sys
+import sys,os
 from typing import Dict, Tuple
 
 import dill
@@ -14,6 +14,7 @@ from yaml import safe_dump
 from src.forest.constant import MODEL_CONFIG_FILE, SCHEMA_CONFIG_FILE
 from src.forest.exception import ForestException
 from src.forest.logger import logging
+
 
 class MainUtils:
     def __init__(self) -> None:
@@ -35,3 +36,15 @@ class MainUtils:
 
         except Exception as e:
             raise ForestException(e, sys) from e
+
+    def create_directories(path_to_directories: list, verbose=True):
+        """create list of directories
+
+        Args:
+            path_to_directories (list): list of path of directories
+            ignore_log (bool, optional): ignore if multiple dirs is to be created. Defaults to False.
+        """
+        for path in path_to_directories:
+            os.makedirs(path, exist_ok=True)
+            if verbose:
+                logging.info(f"created directory at: {path}")

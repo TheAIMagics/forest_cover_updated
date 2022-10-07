@@ -6,6 +6,7 @@ from pandas import DataFrame
 from src.forest.components.data_ingestion import DataIngestion
 from src.forest.exception import ForestException
 from src.forest.logger import logging
+from src.forest.configuration.configuration import ConfigurationManager
 
 class TrainPipeline:
     def __init__(self):
@@ -17,9 +18,11 @@ class TrainPipeline:
         try:
             logging.info("Getting the data from mongodb")
 
-            data_ingestion = DataIngestion()
+            config = ConfigurationManager()
 
-            data_ingestion.initiate_data_ingestion()
+            data_ingestion_config = config.get_data_ingestion_config()
+        
+            data_ingestion = DataIngestion(config=data_ingestion_config)
 
             train_data, test_set = data_ingestion.initiate_data_ingestion()
 
@@ -28,7 +31,7 @@ class TrainPipeline:
             logging.info(
                 "Exited the start_data_ingestion method of TrainPipeline class"
             )
-            
+        
             return train_data, test_set
 
         except Exception as e:
