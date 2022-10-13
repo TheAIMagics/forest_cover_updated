@@ -6,6 +6,7 @@ from pandas import DataFrame
 from src.forest.components.data_ingestion import DataIngestion
 from src.forest.components.data_validation import DataValidation
 from src.forest.components.data_transformation import DataTransformation
+from src.forest.components.model_trainer import ModelTrainer
 from src.forest.exception import ForestException
 from src.forest.logger import logging
 from src.forest.configuration.configuration import ConfigurationManager
@@ -79,6 +80,20 @@ class TrainPipeline:
             )
 
             return train_set, test_set
+
+        except Exception as e:
+            raise ForestException(e, sys) from e
+        
+    @staticmethod
+    def start_model_trainer(train_set: DataFrame, test_set: DataFrame) -> None:
+        logging.info("Entered the start_model_trainer method of TrainPipeline class")
+
+        try:
+            model_trainer = ModelTrainer()
+
+            model_trainer.initiate_model_trainer(train_set, test_set)
+
+            logging.info("Exited the start_model_trainer method of TrainPipeline class")
 
         except Exception as e:
             raise ForestException(e, sys) from e
